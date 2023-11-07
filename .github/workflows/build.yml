@@ -1,0 +1,56 @@
+# This is a basic workflow that is manually triggered
+
+name: Build workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_url:
+        description: 'Source tarball URL'
+        default: 'https://www.sqlite.org/src/tarball/sqlite.tar.gz?r=release'
+        required: true
+        type: string
+
+      em_version:
+        description: 'EMSDK version'
+        default: '3.1.47'
+        required: true
+        type: string
+
+env:
+  EM_CACHE_FOLDER: 'emsdk-cache'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        sparse-checkout: .
+    
+    # Install EMSDK
+    - name: Setup Emscripten
+      id: cache-system-libraries
+      uses: actions/cache@v3
+      with:
+        path: ${{env.EM_CACHE_FOLDER}}
+        key: ${{inputs.em_version}}-${{runner.os}}
+    - uses: mymindstorm/setup-emsdk@v12
+      with:
+        version: ${{env.EM_VERSION}}
+        actions-cache-folder: ${{env.EM_CACHE_FOLDER}}
+    - run: emcc -v
+
+    # Unpack tarball
+    - name: Unpack tarball
+      run: curl ${{inputs.source_url}} | tar xzf - && du .
+      
+    # Build
+    - name: Build amalgamation
+      working-directory: ./sqlite
+      run: ./configure --enable-all && make sqlite3.c
+    - name: Build wasm
+      working-directory: ./sqlite/ext/wasm
+      run: make
+      
