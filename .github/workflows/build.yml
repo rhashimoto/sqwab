@@ -45,7 +45,10 @@ jobs:
     # Unpack tarball
     - name: Unpack tarball
       run: curl ${{inputs.source_url}} | tar xzf - && du .
-      
+
+    # Overlay files onto SQLite tree
+    - run: tar -C overlay -cf - . | tar -C sqlite -xvf -
+    
     # Build
     - name: Build amalgamation
       working-directory: ./sqlite
@@ -53,4 +56,5 @@ jobs:
     - name: Build wasm
       working-directory: ./sqlite/ext/wasm
       run: make
+    - run: find . -name \*.wasm
       
