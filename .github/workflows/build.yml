@@ -27,7 +27,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        sparse-checkout: .
+        sparse-checkout: overlay
     - run: find .
     
     # Install EMSDK
@@ -48,7 +48,7 @@ jobs:
       run: curl ${{inputs.source_url}} | tar xzf - && du .
 
     # Overlay files onto SQLite tree
-    - run: tar -C ./overlay -cf - . | tar -C ./sqlite -xvf -
+    - run: tar -C overlay -cf - . | tar -C sqlite -xvf -
     
     # Build
     - name: Build amalgamation
