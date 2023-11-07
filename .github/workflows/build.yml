@@ -19,7 +19,8 @@ on:
 
 env:
   EM_CACHE_FOLDER: 'emsdk-cache'
-
+  GH_TOKEN: ${{ github.token }}
+  
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -56,10 +57,9 @@ jobs:
     - name: Build wasm
       working-directory: ./sqlite/ext/wasm
       run: make
-    - run: find . -name \*.wasm
 
     # Package
     - name: Create release with tarball
       run: |
         tar -czf ./sqlite-wasm.tgz -C ./sqlite/ext/wasm/jswasm .
-        gh release create --generate-notes ./sqlite-wasm-tgz
+        gh release create --generate-notes --notes "${{inputs.source_url}}\n${{inputs.em_version}}" ./sqlite-wasm-tgz
