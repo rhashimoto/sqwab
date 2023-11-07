@@ -56,10 +56,12 @@ jobs:
       run: ./configure --enable-all && make sqlite3.c
     - name: Build wasm
       working-directory: ./sqlite/ext/wasm
-      run: make
+      run: make dist
 
     # Package
     - name: Create release with tarball
       run: |
-        tar -czf ./sqlite-wasm.tgz -C ./sqlite/ext/wasm/jswasm .
-        gh release create --generate-notes --notes "${{inputs.source_url}}\n${{inputs.em_version}}" ./sqlite-wasm-tgz
+        tar -C sqlite/ext/wasm/jswasm -czf - . > ./jswasm.tgz
+        echo "SQLite ${{inputs.source_url}}" >> NOTES
+        echo "EMSDK ${{inputs.em_version}}" >> NOTES
+        gh release create "v`date +%s`" sqlite/ext/wasm/*.zip --generate-notes --notes-file NOTES
