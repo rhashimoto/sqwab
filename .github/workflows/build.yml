@@ -28,7 +28,6 @@ jobs:
     - uses: actions/checkout@v4
       with:
         sparse-checkout: overlay
-    - run: find .
     
     # Install EMSDK
     - name: Setup Emscripten
@@ -45,7 +44,7 @@ jobs:
 
     # Unpack tarball
     - name: Unpack tarball
-      run: curl ${{inputs.source_url}} | tar xzf - && du .
+      run: curl ${{inputs.source_url}} | tar xzf -
 
     # Overlay files onto SQLite tree
     - run: tar -C overlay -cf - . | tar -C sqlite -xvf -
@@ -58,4 +57,9 @@ jobs:
       working-directory: ./sqlite/ext/wasm
       run: make
     - run: find . -name \*.wasm
-      
+
+    # Package
+    - name: Create release with tarball
+      run: |
+        tar -czf ./sqlite-wasm.tgz -C ./sqlite/ext/wasm/jswasm .
+        gh release create --generate-notes ./sqlite-wasm-tgz
