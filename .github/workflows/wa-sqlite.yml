@@ -1,0 +1,73 @@
+# This is a basic workflow that is manually triggered
+
+name: wa-sqlite workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      sqlite_tag:
+        description: 'SQLite source tree tag'
+        default: 'version-3.44.0'
+        required: true
+        type: string
+
+      em_version:
+        description: 'EMSDK version'
+        default: '3.1.47'
+        required: true
+        type: string
+
+      make_args:
+        description: 'make arguments'
+        default: ''
+        required: true
+        type: string
+        
+env:
+  EM_CACHE_FOLDER: 'emsdk-cache'
+  GH_TOKEN: ${{ github.token }}
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        sparse-checkout: overlay
+    
+    # Install EMSDK
+    - name: Setup Emscripten
+      id: cache-system-libraries
+      uses: actions/cache@v3
+      with:
+        path: ${{env.EM_CACHE_FOLDER}}
+        key: ${{inputs.em_version}}-${{runner.os}}
+    - uses: mymindstorm/setup-emsdk@v12
+      with:
+        version: ${{inputs.em_version}}
+        actions-cache-folder: ${{env.EM_CACHE_FOLDER}}
+    - run: emcc -v
+
+    # Check out wa-sqlite
+    - name: Check out wa-sqlite
+      run: git clone "https://github.com/rhashimoto/wa-sqlite.git#make-rewrite"
+
+    # Overlay files.
+    - run: tar -C overlay.wa-sqlite -cf - . | tar -C wa-sqlite -xvf -
+    
+    # Build
+    - name: Build wa-sqlite
+      working-directory: ./wa-sqlite
+      run: |
+        make ${{inputs.make_args}}
+        (cd dist; tar czf ../wa-sqlite.dist.tgz .)
+
+    # Package
+    - name: Create release
+      run: |
+        echo "wa-sqlite build `date`" >> NOTES
+        echo "SQLite ${{inputs.sqlite_tag}}" >> NOTES
+        echo "EMSDK ${{inputs.em_version}}" >> NOTES
+        echo "${{make_args}}" >> NOTES
+        gh release create "v`date +%s`" wa-sqlite/*.tgz --generate-notes --notes-file NOTES
