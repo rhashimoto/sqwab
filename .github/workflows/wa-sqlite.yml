@@ -34,7 +34,9 @@ jobs:
     steps:
     - uses: actions/checkout@v4
       with:
-        sparse-checkout: overlay
+        sparse-checkout: |
+          overlay
+          overlay.wa-sqlite
     
     # Install EMSDK
     - name: Setup Emscripten
