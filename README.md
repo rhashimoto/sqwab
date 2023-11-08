@@ -10,7 +10,7 @@ To use it:
 * Once your changes are on GitHub, [manually run the workflow](https://docs.github.com/en/actions/using-workflows/manually-running-a-workflow) named "Build workflow". You will be prompted for these options:
   * Source tarball URL - Enter a source code tarball link (see the [SQLite repo home](https://sqlite.org/src/doc/trunk/README.md) under "Obtaining the SQLite Source Code"). By default this is the latest release.
   * Emscripten SDK version - This is the [Emscripten toolchain]([url](https://emscripten.org/docs/tools_reference/emsdk.html)https://emscripten.org/docs/tools_reference/emsdk.html) version. By default, this is something close to current when I created the workflow.
-* A successful run of the workflow will produce a new [GitHub release]([url](https://docs.github.com/en/repositories/releasing-projects-on-github)https://docs.github.com/en/repositories/releasing-projects-on-github) on your fork with a zip file containing the built artifacts.
+* A successful run of the workflow will produce a new [GitHub release](https://docs.github.com/en/repositories/releasing-projects-on-github) on your fork with a zip file containing the built artifacts.
 
 If you want to change the workflow itself, it is under .github/workflows/build.yml.
 
