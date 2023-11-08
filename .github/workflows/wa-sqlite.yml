@@ -20,7 +20,7 @@ on:
       make_args:
         description: 'make arguments'
         default: ''
-        required: true
+        required: false
         type: string
         
 env:
@@ -69,5 +69,5 @@ jobs:
         echo "wa-sqlite build `date`" >> NOTES
         echo "SQLite ${{inputs.sqlite_tag}}" >> NOTES
         echo "EMSDK ${{inputs.em_version}}" >> NOTES
-        echo "${{make_args}}" >> NOTES
+        echo "${{inputs.make_args}}" >> NOTES
         gh release create "v`date +%s`" wa-sqlite/*.tgz --generate-notes --notes-file NOTES
