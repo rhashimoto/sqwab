@@ -11,7 +11,7 @@ To use it:
   * wa-sqlite
     * SQLite source tree tag - Enter a SQLite source tree tag, e.g. "version-3.44.0"
     * Emscripten SDK version - This is the [Emscripten toolchain]([url](https://emscripten.org/docs/tools_reference/emsdk.html)https://emscripten.org/docs/tools_reference/emsdk.html) version. By default, this is something close to current when I created the workflow.
-    * make arguments - Any arguments will be passed to make, e.g. to include full text search enter '"WASQLITE_EXTRA_DEFINES="-DSQLITE_ENABLE_FTS5"' (without the outer quotes).
+    * make arguments - Any arguments will be passed to make, e.g. to include full text search enter WASQLITE_EXTRA_DEFINES="-DSQLITE_ENABLE_FTS5".
   * SQLite
     * Source tarball URL - Enter a source code tarball link (see the [SQLite repo home](https://sqlite.org/src/doc/trunk/README.md) under "Obtaining the SQLite Source Code"). By default this is the latest release.
     * Emscripten SDK version - This is the [Emscripten toolchain]([url](https://emscripten.org/docs/tools_reference/emsdk.html)https://emscripten.org/docs/tools_reference/emsdk.html) version. By default, this is something close to current when I created the workflow.
