@@ -3,7 +3,7 @@ This is a helper project for custom builds of the [official SQLite WASM library]
 
 To use it:
 
-* Fork this repo.
+* Fork or clone this repo.
 * Add or edit files under [overlay/ext/wasm](https://github.com/rhashimoto/sqwab/tree/master/overlay/ext/wasm) (in your fork). This will typically be one of both of:
   * Adding a modified [ext/wasm/GNUMakefile](https://sqlite.org/src/file?name=ext/wasm/GNUmakefile&ci=trunk), e.g. to change build options.
   * Using the ext/wasm/sqlite3_wasm_extra_init.c extension point to add C code.
@@ -14,4 +14,4 @@ To use it:
 
 If you want to change the workflow itself, it is under .github/workflows/build.yml.
 
-If the build workflow fails with an error like `HTTP 403: Resource not accessible by integration`, you will need to change your [GitHub Actions permissions]([url](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#managing-github-actions-permissions-for-your-repository)https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#managing-github-actions-permissions-for-your-repository). Make sure that "Workflow permissions" is set to "Read and write permissions".
+If the build workflow fails with an error like `HTTP 403: Resource not accessible by integration`, you may need to change your [GitHub Actions permissions]([url](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#managing-github-actions-permissions-for-your-repository)https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/enabling-features-for-your-repository/managing-github-actions-settings-for-a-repository#managing-github-actions-permissions-for-your-repository). Make sure that "Workflow permissions" is set to "Read and write permissions".
