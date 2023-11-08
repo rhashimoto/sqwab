@@ -61,7 +61,6 @@ jobs:
     # Package
     - name: Create release with tarball
       run: |
-        tar -C sqlite/ext/wasm/jswasm -czf - . > ./jswasm.tgz
         echo "SQLite ${{inputs.source_url}}" >> NOTES
         echo "EMSDK ${{inputs.em_version}}" >> NOTES
         gh release create "v`date +%s`" sqlite/ext/wasm/*.zip --generate-notes --notes-file NOTES
