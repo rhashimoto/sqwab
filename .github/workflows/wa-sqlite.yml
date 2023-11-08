@@ -51,7 +51,7 @@ jobs:
 
     # Check out wa-sqlite
     - name: Check out wa-sqlite
-      run: git clone -b make-rewrite https://github.com/rhashimoto/wa-sqlite.git
+      run: git clone https://github.com/rhashimoto/wa-sqlite.git
 
     # Overlay files.
     - run: tar -C overlay.wa-sqlite -cf - . | tar -C wa-sqlite -xvf -
