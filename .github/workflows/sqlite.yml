@@ -1,6 +1,6 @@
 # This is a basic workflow that is manually triggered
 
-name: Build workflow
+name: SQLite workflow
 
 on:
   workflow_dispatch:
