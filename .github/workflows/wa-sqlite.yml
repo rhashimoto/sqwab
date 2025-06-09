@@ -13,7 +13,7 @@ on:
 
       em_version:
         description: 'EMSDK version'
-        default: '3.1.47'
+        default: '3.1.61'
         required: true
         type: string
 
@@ -41,12 +41,12 @@ jobs:
       id: cache-system-libraries
       uses: actions/cache@v4
       with:
-        path: ~/emsdk-cache
+        path: ${{env.EM_CACHE_FOLDER}}
         key: ${{inputs.em_version}}-${{runner.os}}
     - uses: mymindstorm/setup-emsdk@v14
       with:
         version: ${{inputs.em_version}}
-        actions-cache-folder: ~/emsdk-cache
+        actions-cache-folder: ${{env.EM_CACHE_FOLDER}}
     - run: emcc -v
 
     # Check out wa-sqlite
