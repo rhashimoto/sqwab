@@ -7,7 +7,7 @@ on:
     inputs:
       sqlite_tag:
         description: 'SQLite source tree tag'
-        default: 'version-3.44.0'
+        default: 'version-3.50.1'
         required: true
         type: string
 
